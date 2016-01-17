@@ -1,7 +1,7 @@
 html, body {
   height: 100%;
   overflow: hidden;
-  background-image: url('./desk-bg.jpg');
+  background-image: url('../img/desk-bg.jpg');
   background-size: 100% 110%;
 }
 .circle {
@@ -65,7 +65,7 @@ html, body {
 
 .screen-container {
   margin: auto;
-  background-image: url('./screen.svg');
+  background-image: url('../img/screen.svg');
   width: 1377px;
   height: 1060px;
   margin-top: 25px;
