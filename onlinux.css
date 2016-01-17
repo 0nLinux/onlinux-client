@@ -1,0 +1,130 @@
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background-image: url('./desk-bg.jpg');
+  background-size: 100% 110%;
+}
+.circle {
+  background-color: red;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  top: -100px;
+  right: -100px;
+}
+.vertical-center {
+  min-height: 100%;  /* Fallback for vh unit */
+  min-height: 100vh; /* You might also want to use
+                        'height' property instead.
+                        
+                        Note that for percentage values of
+                        'height' or 'min-height' properties,
+                        the 'height' of the parent element
+                        should be specified explicitly.
+  
+                        In this case the parent of '.vertical-center'
+                        is the <body> element */
+
+  /* Make it a flex container */
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex; 
+  
+  /* Align the bootstrap's container vertically */
+  -webkit-box-align : center;
+  -webkit-align-items : center;
+  -moz-box-align : center;
+  -ms-flex-align : center;
+  align-items : center;
+  
+  /* In legacy web browsers such as Firefox 9
+     we need to specify the width of the flex container */
+  width: 100%;
+  
+  /* Also 'margin: 0 auto' doesn't have any effect on flex items in such web browsers
+     hence the bootstrap's container won't be aligned to the center anymore.
+  
+     Therefore, we should use the following declarations to get it centered again */
+  -webkit-box-pack : center;
+  -moz-box-pack : center;
+  -ms-flex-pack : center;
+  -webkit-justify-content : center;
+  justify-content : center;
+}
+.vnc-container {
+  width: 1280px;
+  height: 720px;
+  margin-top: 42px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid green;
+}
+
+.screen-container {
+  margin: auto;
+  background-image: url('./screen.svg');
+  width: 1377px;
+  height: 1060px;
+  margin-top: 25px;
+}
+
+@-webkit-keyframes blinkLEDFrames {
+  0%, 46%, 51%, 61%, 71%, 96% {
+    opacity:1;
+  }
+  50%, 59%, 69%, 86%, 100% { 
+    opacity:0;
+  }
+}
+
+.screenLED {
+  margin-top: 13px;
+  margin-left: auto;
+  margin-right: 107px;
+  width: 12px;
+  height: 12px;
+  background-color: #111;
+}
+
+.blinkLED {
+  -webkit-animation: blinkLEDFrames 3s 1;
+  -webkit-animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes typing {
+    from { width: 0 }
+    to { width:5em }
+}
+
+@-moz-keyframes typing {
+    from { width: 0 }
+    to { width:5em }
+}
+
+@-webkit-keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: black }
+}
+
+@-moz-keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: black }
+}
+
+body { font-family: Consolas, monospace; }
+
+.vnc-container h1 {
+    font-size:150%;
+    width:16.3em;
+    white-space:nowrap;
+    overflow:hidden;
+    border-right: .1em solid black;
+    font-family: 'VT323';
+    -webkit-animation: typing 17s steps(10, end), /* # of steps = # of characters */
+                        blink-caret 1s step-end infinite;
+    -moz-animation: typing 17s steps(10, end), /* # of steps = # of characters */
+                        blink-caret 1s step-end infinite;
+}
