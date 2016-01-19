@@ -1,5 +1,6 @@
 'use strict'
 
+// global client instance
 var olcl;
 
 // wait for DOM to be loaded before doing anything
@@ -7,44 +8,98 @@ var olcl;
 
 var OLClient = function() {
   this._host = '127.0.0.1';
+  this._port = 1215;
   this._vncport = 5900;
+  this._vncToken = 0;
+  this._httpString = 'http://' + this._host + ':' + this._port + '/';
   this._guid = this._guidGenerator();
   this._connected = false;
   this._distro = 'debian';
   this._xhr;
+  this._reqPatience = 1000;
   console.log('Hooking controls...');
   this._hookControls();
 };
 
 OLClient.prototype._hookControls = function() {
   var self = this;
-  document.getElementById('btnRequest').addEventListener('click', function() {
+  var inpHost = document.getElementById('inpHost');
+  var selDistro = document.getElementById('selDistro');
+  var btnRequest = document.getElementById('btnRequest');
+  var btnCancelReq = document.getElementById('btnCancelReq');
+
+  btnRequest.addEventListener('click', function() {
     console.log('VM Requested by user.');
-    var valHost = document.getElementById('inpHost').value;
-    valHost = (valHost && valHost !== '' && valHost !== self._host) ? valHost :
-                                                                      self._host;
-    var valDistro = document.getElementById('selDistro').value;
-    valDistro = (valDistro && valDistro !== '' && valDistro !== self._distro) ? valDistro :
-                                                                                self._distro;
-    console.log('Sending request for \'' + valDistro + '\' to ' + valHost);
-    self.requestVM(valHost, valDistro);
+
+    console.log('Sending request for \'' + self._distro + '\' to ' + self._httpString);
+    self._requestVM();
+  });
+
+  btnCancelReq.addEventListener('click', function() {
+    if (self._xhr) self._xhr = null;
+  });
+
+  inpHost.addEventListener('change', function(evt) {
+    if (evt.target.value !== '') {
+      self._host = evt.target.value;
+      self._updateHttpString();
+    }
+  });
+  selDistro.addEventListener('change', function(evt) {
+    self._distro = evt.target.value.toLowerCase();
+    self._updateHttpString();
   });
   console.log('... controls hooked.');
 };
 
-OLClient.prototype.requestVM = function(host, distro) {
-  var self = this;
+OLClient.prototype._updateHttpString = function() {
+  this._httpString = 'http://' + this._host + ':' + this._port + '/';
+};
+
+OLClient.prototype._requestVM = function() {
   this._xhr = new XMLHttpRequest();
-  this._xhr.onreadystatechange = self._xhrHandler;
-  this._xhr.open('GET', 'http://' + host + ':1215/canIhasaVM');
+  this._xhr.onreadystatechange = this._xhrHandler;
+  // ...:1215/ICanHaZVM?
+  this._xhr.open('GET', this._httpString + 'ichzvm?' + this._distro + '&' + this._guid);
   this._xhr.send();
+};
+
+OLClient.prototype._askStatus = function() {
+  if (olcl._xhr) {
+    // ...:1215/YouDoneAlready?
+    olcl._xhr.open('GET', olcl._httpString + 'yda?' + olcl._guid);
+    olcl._xhr.send();
+  }
 };
 
 OLClient.prototype._xhrHandler = function(evt) {
   var srcXHR = evt.srcElement;
+  var data;
   if (srcXHR.readyState === XMLHttpRequest.DONE) {
     if (srcXHR.status === 200) {
-      console.log(srcXHR.responseText);
+      try {
+        data = JSON.parse(srcXHR.responseText);
+        console.info('Server responded: ' + data.status);
+        switch (data.status) {
+          case 'booting':
+            window.setTimeout(olcl._askStatus, olcl._reqPatience);
+            break;
+          case 'waiting':
+            console.info('Still waiting for VM. :/');
+            window.setTimeout(olcl._askStatus, olcl._reqPatience);
+            break;
+          case 'token':
+            console.log('Server passed a VNC token: ' + data.token);
+            olcl.getThePartyStarted();
+            break;
+          default:
+            console.warn('I really don\'t know what to do with:');
+            console.warn(data);
+        }
+      } catch (err) {
+        console.error('Couldn\'t parse response: ' + srcXHR.responseText);
+        console.error(err);
+      }
     } else {
       console.log('Request failed with status: ' + srcXHR.status);
     }
