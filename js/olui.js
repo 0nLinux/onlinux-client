@@ -4,23 +4,23 @@ var OLUi = function() {
   console.log('Hooking controls...');
   this.machineData = {
     debian: {
-      text: 'Debian machine.',
+      text: 'Debian is composed entirely of free software, most of which is under the GNU General Public License, and packaged by a group of individuals known as the Debian Project. Debian is a popular choice for personal computers and network servers, and has been used as a base for several other Linux distributions.',
       titleSVG: './img/debian-title.svg'
     },
     ubuntu: {
-      text: 'Ubuntu machine.',
+      text: 'Ubuntu comes with everything you need to run your organisation, school, home or enterprise. All the essential applications, like an office suite, browsers, email and media apps come pre-installed and thousands more games and applications are available in the Ubuntu software centre.',
       titleSVG: './img/ubuntu-title.svg'
     },
     elementary: {
-      text: 'Elementary machine.',
-      titleSVG: './img/debian-title.svg'
+      text: 'A fast and open replacement for Windows and OS X.',
+      titleSVG: './img/elementary-title.svg'
     },
     mint: {
-      text: 'Mint machine.',
-      titleSVG: './img/debian-title.svg'
+      text: 'The purpose of Linux Mint is to produce a modern, elegant and comfortable operating system which is both powerful and easy to use.\n\nLinux Mint is the most popular desktop Linux distribution and the 3rd most widely used home operating system behind Microsoft Windows and Apple Mac OS.',
+      titleSVG: './img/mint-title.svg'
     },
     manjaro: {
-      text: 'Manjaro machine.',
+      text: 'Enjoy the simplicity.',
       titleSVG: './img/manjaro-title.svg'
     }
   }
