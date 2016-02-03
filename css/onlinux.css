@@ -255,8 +255,8 @@ h1 {
   display: none;
 }
 .menu-item-cbox:checked + .menu-item img {
-  -webkit-transition-duration: 180ms;
-          transition-duration: 180ms;
+  -webkit-transition-duration: 750ms;
+          transition-duration: 750ms;
   -webkit-transform: translate3d(-300px, 130px, 0);
           transform: translate3d(-300px, 130px, 0);
   cursor: default;
