@@ -17,39 +17,6 @@ var OLClient = function() {
   this._distro = 'debian';
   this._xhr;
   this._reqPatience = 1000;
-  console.log('Hooking controls...');
-  this._hookControls();
-};
-
-OLClient.prototype._hookControls = function() {
-  var self = this;
-  var inpHost = document.getElementById('inpHost');
-  var selDistro = document.getElementById('selDistro');
-  var btnRequest = document.getElementById('btnRequest');
-  var btnCancelReq = document.getElementById('btnCancelReq');
-
-  btnRequest.addEventListener('click', function() {
-    console.log('VM Requested by user.');
-
-    console.log('Sending request for \'' + self._distro + '\' to ' + self._httpString);
-    self._requestVM();
-  });
-
-  btnCancelReq.addEventListener('click', function() {
-    if (self._xhr) self._xhr = null;
-  });
-
-  inpHost.addEventListener('change', function(evt) {
-    if (evt.target.value !== '') {
-      self._host = evt.target.value;
-      self._updateHttpString();
-    }
-  });
-  selDistro.addEventListener('change', function(evt) {
-    self._distro = evt.target.value.toLowerCase();
-    self._updateHttpString();
-  });
-  console.log('... controls hooked.');
 };
 
 OLClient.prototype._updateHttpString = function() {

@@ -1,0 +1,178 @@
+/*
+  https://github.com/daneden/animate.css/blob/master/animate.css
+ */
+
+@-webkit-keyframes fadeOutLeft {
+  from {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+
+  to {
+    opacity: 0;
+    -webkit-transform: translate3d(-50%, 0, 0);
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+@keyframes fadeOutLeft {
+  from {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+
+  to {
+    opacity: 0;
+    -webkit-transform: translate3d(-50%, 0, 0);
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.fadeOutLeft {
+  -webkit-animation-name: fadeOutLeft;
+  animation-name: fadeOutLeft;
+}
+
+@-webkit-keyframes fadeOutRight {
+  from {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+
+  to {
+    opacity: 0;
+    -webkit-transform: translate3d(50%, 0, 0);
+    transform: translate3d(50%, 0, 0);
+  }
+}
+@keyframes fadeOutRight {
+  from {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+
+  to {
+    opacity: 0;
+    -webkit-transform: translate3d(50%, 0, 0);
+    transform: translate3d(50%, 0, 0);
+  }
+}
+
+.fadeOutRight {
+  -webkit-animation-name: fadeOutRight;
+  animation-name: fadeOutRight;
+}
+
+@-webkit-keyframes fadeInDown {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -50%, 0);
+    transform: translate3d(0, -50%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -50%, 0);
+    transform: translate3d(0, -50%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+.fadeInDown {
+  -webkit-animation-name: fadeInDown;
+  animation-name: fadeInDown;
+}
+
+@-webkit-keyframes fadeInUp {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 50%, 0);
+    transform: translate3d(0, 50%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 50%, 0);
+    transform: translate3d(0, 50%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+.fadeInUp {
+  -webkit-animation-name: fadeInUp;
+  animation-name: fadeInUp;
+}
+
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+/* loading card */
+.card-info {
+  opacity: 0;
+  position: relative;
+  top: -120px;
+  width: 750px;
+  height: 500px;
+}
+.card-info-title {
+  opacity: 0;
+  position: relative;
+  color: #000;
+  left: -200px;
+  top: -340px;
+  height: 100px;
+  width: 300px;
+  line-height: 2em;
+}
+
+.card-info-title img {
+  height: 100px;
+  width: 300px;
+}
+
+.card-info-textcard {
+  opacity: 0;
+  position: relative;
+  top: -680px;
+  left: 160px;
+  width: 350px;
+  height: 250px;
+  padding: 15px;
+  text-align: left;
+}
+
+.card-info-textcard span {
+  color: #000;
+  font-family: 'Cantarell';
+}

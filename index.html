@@ -1,31 +1,58 @@
 <!Doctype html>
 <html>
   <head>
+    <!-- bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous" />
-    <link href='https://fonts.googleapis.com/css?family=VT323' rel='stylesheet' type='text/css'>
+    <!---->
+    <!-- relative -->
     <link rel="stylesheet" href="./css/onlinux.css" />
-    <script src="./js/olclient.js" type="text/javascript" charset="utf-8" async defer></script>
+    <link rel="stylesheet" href="./css/card.css" />
+    <script src="./js/olui.js" type="text/javascript" charset="utf-8" async defer></script>
+    <!---->
+    <!-- Cantarell font !-->
+    <link href='https://fonts.googleapis.com/css?family=Cantarell:400,700' rel='stylesheet' type='text/css'>
+    <!---->
   </head>
   <body>
-    <div class="vertical-center">
-      <div class="menu-container">
+    <!-- Menu -->
+    <div class="row">
+      <div class="menu-container vertical-center">
         <nav class="menu">
-          <input type="checkbox" href="#" class="menu-open" name="menu-open" id="menu-open" />
+          <input type="checkbox" class="menu-open" name="menu-open" id="menu-open" />
           <label class="menu-open-button" for="menu-open">
             <span class="hamburger hamburger-1"></span>
             <span class="hamburger hamburger-2"></span>
             <span class="hamburger hamburger-3"></span>
           </label>
+
           <!-- Debian -->
-          <a href="#" class="menu-item"><img src="./img/debian.svg" /></a>
+          <input type="checkbox" class="menu-item-cbox" name="menu-item-debian" id="menu-item-debian" data-type="debian" />
+          <label class="menu-item" for="menu-item-debian">
+            <span class="menu-item-inner"><img src="./img/debian.svg" /></span>
+          </label>
           <!-- Ubuntu -->
-          <a href="#" class="menu-item"><img src="./img/ubuntu.svg" /></a>
+          <input type="checkbox" class="menu-item-cbox" name="menu-item-ubuntu" id="menu-item-ubuntu" data-type="ubuntu" />
+          <label class="menu-item" for="menu-item-ubuntu">
+            <span class="menu-item-inner"><img src="./img/ubuntu.svg" /></span>
+          </label>
+
           <!-- Elementary OS -->
-          <a href="#" class="menu-item"><img src="./img/elementary.svg" /></a>
+          <input type="checkbox" class="menu-item-cbox" name="menu-item-elementary" id="menu-item-elementary" data-type="elementary" />
+          <label class="menu-item" for="menu-item-elementary">
+            <span class="menu-item-inner"><img src="./img/elementary.svg" /></span>
+          </label>
+
           <!-- Linux Mint -->
-          <a href="#" class="menu-item"><img src="./img/mint.svg" /></a>
+          <input type="checkbox" class="menu-item-cbox" name="menu-item-mint" id="menu-item-mint" data-type="mint" />
+          <label class="menu-item" for="menu-item-mint">
+            <span class="menu-item-inner"><img src="./img/mint.svg" /></span>
+          </label>
+
           <!-- Manjaro -->
-          <a href="#" class="menu-item"><img src="./img/manjaro.svg" /></a>
+          <input type="checkbox" class="menu-item-cbox" name="menu-item-manjaro" id="menu-item-manjaro" data-type="manjaro" />
+          <label class="menu-item" for="menu-item-manjaro">
+            <span class="menu-item-inner"><img src="./img/manjaro.svg" /></span>
+          </label>
         </nav>
 
 
@@ -49,6 +76,22 @@
             </filter>
           </defs>
         </svg>
+      </div>
+      <div class="canvas-container">
+        <canvas id="vnc-canvas" width="240" height="20" style="width: 240px; height: 20px; cursor: default;">Canvas not supported.</canvas>
+      </div>
+    </div>
+    <!-- Cards/Dialogs -->
+    <div class="row">
+      <div class="col-ld-12">
+        <!-- machine info card -->
+          <div class="card card-info vertical-center animated" id="card-info"></div>
+          <div class="card-info-title vertical-center animated" id="card-info-title">
+            <img src="./img/debian-text.svg" />
+          </div>
+          <div class="card animated vertical-center card-info-textcard" id="card-info-textcard">
+            <span>Debian is a free operating system (OS) for your computer. An operating system is the set of basic programs and utilities that make your computer run.</span>
+          </div>
       </div>
     </div>
   </body>
