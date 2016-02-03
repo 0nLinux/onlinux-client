@@ -176,3 +176,10 @@
   color: #000;
   font-family: 'Cantarell';
 }
+
+.card-info-textcard #info-link {
+  color: #23527c;
+  position: absolute;
+  bottom: 12px;
+  right: 20px;
+}
