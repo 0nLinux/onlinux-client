@@ -266,12 +266,40 @@ h1 {
   height: 250px;
 }
 
-.btn,.card {
+.btn-start {
+  -webkit-transition-duration: 550ms;
+    transition-duration: 550ms;
+  opacity: 0 !important;
+  height: 45px;
+  margin-left: 25px;
+  opacity: 1;
+  position: relative;
+  top: -650px;
+  left: 160px;
+  width: 350px;
+  height: 75px;
+  text-align: center;
+  font-size: 1.8em !important;
+  pointer-events: none;
+}
+.btn-start:hover {
+  -webkit-transform: scale(1.2, 1.2);
+          transform: scale(1.2, 1.2);
+}
+
+.btn {
   box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
-  background-color: #f5f5f3;
+  background-color: #a80032 !important;
+  color: #f5f5f3 !important;
+  outline: none !important;
+  font: bold 1.2em 'Cantarell';
 }
 .btn:hover {
-  box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18),0 4px 15px 0 rgba(0,0,0,0.15);
+  box-shadow: 0 8px 14px 0 rgba(0,0,0,0.22),0 15px 30px 0 rgba(0,0,0,0.21);
+  /*box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18),0 4px 15px 0 rgba(0,0,0,0.15);*/
+}
+.btn:active {
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,0.16),0 1px 5px 0 rgba(0,0,0,0.12);
 }
 .modal {
   box-shadow: 0 16px 28px 0 rgba(0,0,0,0.22),0 25px 55px 0 rgba(0,0,0,0.21);
