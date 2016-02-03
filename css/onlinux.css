@@ -271,21 +271,16 @@ h1 {
     transition-duration: 550ms;
   opacity: 0 !important;
   height: 45px;
-  margin-left: 25px;
   opacity: 1;
   position: relative;
   left: 280px;
   width: 350px;
-  height: 75px;
+  height: 70px;
   text-align: center;
   font-size: 1.8em !important;
   pointer-events: none;
   -webkit-transition: background-color 0.3s, color 0.3s, width 0.3s, border-width 0.3s, border-color 0.3s;
   transition: background-color 0.3s, color 0.3s, width 0.3s, border-width 0.3s, border-color 0.3s;
-}
-.btn-start:hover {
-  -webkit-transform: scale(1.2, 1.2);
-          transform: scale(1.2, 1.2);
 }
 
 .btn {

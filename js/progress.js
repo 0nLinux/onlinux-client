@@ -90,6 +90,7 @@
   }
 
   UIProgressButton.prototype._submit = function() {
+    this.button.innerText = '';
     // by adding the loading class the button will transition to a "circle"
     classie.addClass( this.el, 'loading' );
     

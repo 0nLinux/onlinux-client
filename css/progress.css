@@ -18,10 +18,8 @@
   left: 20px;
 }
 .progress-button .progress-circle {
-  left: 242px;
-  top: 34px;
-  height: 73px;
-  width: 71px;
+  left: 241px;
+  top: 31px;
 }
 .progress-button svg path {
   opacity: 0;
@@ -29,7 +27,7 @@
 }
 .progress-button svg.progress-circle path {
   stroke: #1ECD97;
-  stroke-width: 6;
+  stroke-width: 5;
 }
 .progress-button svg.checkmark path,
 .progress-button svg.cross path {
