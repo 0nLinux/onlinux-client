@@ -97,9 +97,23 @@ OLUi.prototype._hookControls = function() {
   });
   starter.addEventListener('click', function(evt) {
     console.log('[UI] Requesting ' + evt.target.dataset.type + ' VM');
-    self.controls.menu.items[evt.target.dataset.type].checked = false;
-    self.toggleInfoCard(false);
+    /*self.controls.menu.items[evt.target.dataset.type].checked = false;
+    self.toggleInfoCard(false);*/
   });
+  var progress = new UIProgressButton( document.getElementById('progress-button'), {
+          callback : function( instance ) {
+            var progress = 0,
+              interval = setInterval( function() {
+                progress = Math.min( progress + Math.random() * 0.1, 1 );
+                instance.setProgress( progress );
+
+                if( progress === 1 ) {
+                  instance.stop(1);
+                  clearInterval(interval);
+                }
+              }, 150 );
+          }
+        } );
 };
 
 OLUi.prototype.toggleInfoCard = function(show) {

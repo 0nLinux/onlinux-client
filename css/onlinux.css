@@ -91,7 +91,7 @@ h1 {
 .hamburger {
   width: 25px;
   height: 3px;
-  background: white;
+  background: #f5f5f3;
   display: block;
   position: absolute;
   top: 50%;
@@ -274,13 +274,14 @@ h1 {
   margin-left: 25px;
   opacity: 1;
   position: relative;
-  top: -650px;
-  left: 160px;
+  left: 280px;
   width: 350px;
   height: 75px;
   text-align: center;
   font-size: 1.8em !important;
   pointer-events: none;
+  -webkit-transition: background-color 0.3s, color 0.3s, width 0.3s, border-width 0.3s, border-color 0.3s;
+  transition: background-color 0.3s, color 0.3s, width 0.3s, border-width 0.3s, border-color 0.3s;
 }
 .btn-start:hover {
   -webkit-transform: scale(1.2, 1.2);
@@ -289,7 +290,7 @@ h1 {
 
 .btn {
   box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
-  background-color: #a80032 !important;
+  background-color: #a80032;
   color: #f5f5f3 !important;
   outline: none !important;
   font: bold 1.2em 'Cantarell';
@@ -300,7 +301,4 @@ h1 {
 }
 .btn:active {
   box-shadow: 0 1px 2px 0 rgba(0,0,0,0.16),0 1px 5px 0 rgba(0,0,0,0.12);
-}
-.modal {
-  box-shadow: 0 16px 28px 0 rgba(0,0,0,0.22),0 25px 55px 0 rgba(0,0,0,0.21);
 }

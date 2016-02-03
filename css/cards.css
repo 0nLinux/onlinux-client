@@ -194,3 +194,14 @@
   bottom: 12px;
   right: 20px;
 }
+
+/* request status card */
+.card-request {
+  opacity: 1;
+  position: relative;
+  top: -980px;
+  width: 350px;
+  height: 150px;
+  padding: 15px;
+  text-align: left;
+}
