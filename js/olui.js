@@ -53,6 +53,7 @@ var OLUi = function() {
       textCard: document.getElementById('card-info-textcard')
     },
     menu: {
+      navElement: document.querySelector('.menu'),
       opener: document.getElementById('menu-open'),
       items: {
         debian: document.getElementById('menu-item-debian'),
@@ -70,9 +71,11 @@ OLUi.prototype._hookControls = function() {
   var self = this;
   var menuOpener = this.controls.menu.opener;
   var menuItems = this.controls.menu.items;
+  var menu = this.controls.menu.navElement;
   for (var control in menuItems) {
     menuItems[control].addEventListener('click', function(evt) {
       menuOpener.checked = false;
+      menu.style.height = '120px';
       self.setCardData('info', self.machineData[evt.target.dataset.type]);
       self.toggleInfoCard(true);
     });
@@ -80,8 +83,9 @@ OLUi.prototype._hookControls = function() {
   menuOpener.addEventListener('click', function(evt) {
     for (var control in menuItems) {
       menuItems[control].checked = false;
-      self.toggleInfoCard(false);
     }
+    menu.style.height = '225px';
+    self.toggleInfoCard(false);
   });
 };
 
