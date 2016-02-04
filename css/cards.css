@@ -66,6 +66,38 @@
   animation-name: fadeOutRight;
 }
 
+@-webkit-keyframes fadeOutUp {
+  from {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+
+  to {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -50%, 0);
+    transform: translate3d(0, -50%, 0);
+  }
+}
+@keyframes fadeOutUp {
+  from {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+
+  to {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -50%, 0);
+    transform: translate3d(0, -50%, 0);
+  }
+}
+
+.fadeOutUp {
+  -webkit-animation-name: fadeOutUp;
+  animation-name: fadeOutUp;
+}
+
 @-webkit-keyframes fadeInDown {
   from {
     opacity: 0;
@@ -181,11 +213,13 @@
   padding: 15px;
   text-align: left;
   pointer-events: none;
-}
-
-.card-info-textcard span {
   color: #000;
   font-family: 'Cantarell';
+}
+
+.card-info-textcard #info-text {
+
+  /*opacity: 0;*/
 }
 
 .card-info-textcard #info-link {
@@ -194,14 +228,14 @@
   bottom: 12px;
   right: 20px;
 }
+.card-info-requestlog {
+  position: absolute;
+  font-family: 'Cantarell';
+  color: black;
+  opacity: 0;
+}
 
-/* request status card */
-.card-request {
-  opacity: 1;
-  position: relative;
-  top: -980px;
-  width: 350px;
-  height: 150px;
-  padding: 15px;
-  text-align: left;
+.card-info-requestlog ul {
+  list-style: none;
+  padding-left: 20px;
 }

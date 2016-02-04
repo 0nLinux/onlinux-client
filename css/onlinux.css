@@ -1,7 +1,7 @@
 body {
   overflow: hidden;
   /*background: #f5f5f3;*/
-  background-color: #607D8B;
+  background-color: #607d8b;
   color: white;
   text-align: center;
 }
@@ -296,4 +296,34 @@ h1 {
 }
 .btn:active {
   box-shadow: 0 1px 2px 0 rgba(0,0,0,0.16),0 1px 5px 0 rgba(0,0,0,0.12);
+}
+
+.requestlog-bullet {
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: 0 0 5px #333;
+  box-shadow: 0 0 5px #333;
+  pointer-events: none;
+  margin-bottom: 0;
+  margin-left: 10px;
+  transition: background-color 0.5s;
+}
+
+.requestlog-bullet-cbox {
+  display: none;
+}
+
+/* checked = working */
+.requestlog-bullet-cbox:checked + label {
+  background-color: #607d8b;
+}
+
+/* disabled = error */
+.requestlog-bullet-cbox:disabled + label {
+  background-color: #a80132;
+}
+/* disabled and checked = success */
+.requestlog-bullet-cbox:disabled:checked + label {
+  background-color: #4caf50;
 }

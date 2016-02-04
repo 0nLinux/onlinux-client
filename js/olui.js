@@ -56,7 +56,15 @@ var OLUi = function() {
       card: document.getElementById('card-info'),
       title: document.getElementById('card-info-title'),
       textCard: document.getElementById('card-info-textcard'),
-      starter: document.getElementById('button-start')
+      starter: document.getElementById('button-start'),
+      reqLog: {
+        card: document.getElementById('info-request'),
+        bullets: {
+          queue: document.getElementById('requestlog-queue'),
+          token: document.getElementById('requestlog-token'),
+          connect: document.getElementById('requestlog-connect')
+        }
+      }
     },
     menu: {
       navElement: document.querySelector('.menu'),
@@ -97,23 +105,58 @@ OLUi.prototype._hookControls = function() {
   });
   starter.addEventListener('click', function(evt) {
     console.log('[UI] Requesting ' + evt.target.dataset.type + ' VM');
-    /*self.controls.menu.items[evt.target.dataset.type].checked = false;
-    self.toggleInfoCard(false);*/
+    self.toggleInfoCardText();
   });
-  var progress = new UIProgressButton( document.getElementById('progress-button'), {
-          callback : function( instance ) {
-            var progress = 0,
-              interval = setInterval( function() {
-                progress = Math.min( progress + Math.random() * 0.1, 1 );
-                instance.setProgress( progress );
+  var progress = new UIProgressButton(document.getElementById('progress-button'), {
+    callback : function( instance ) {
+      var progress = 0
+      var interval = setInterval( function() {
+            progress = (Math.round((progress + 0.1) * 10) / 10);
+            self.setLogBullets(progress);
+            instance.setProgress(progress);
+            if(progress === 1) {
+              instance.stop(1);
+              clearInterval(interval);
+            }
+          }, 150);
+      self.setLogBullets(0);
+    }
+  });
+};
 
-                if( progress === 1 ) {
-                  instance.stop(1);
-                  clearInterval(interval);
-                }
-              }, 150 );
-          }
-        } );
+OLUi.prototype.setLogBullets = function(progress) {
+  var queueBulllet = this.controls.infoCard.reqLog.bullets.queue;
+  var tokenBullet = this.controls.infoCard.reqLog.bullets.token;
+  var connectBullet = this.controls.infoCard.reqLog.bullets.connect;
+  switch (progress) {
+    // initial state / queue request
+    case 0:
+      queueBulllet.checked = true;
+      queueBulllet.disabled = false;
+      tokenBullet.checked = tokenBullet.disabled = false;
+      connectBullet.checked = connectBullet.disabled = false;
+      break;
+    // queue success
+    case 0.3:
+      queueBulllet.disabled = true;
+      break;
+    // token request
+    case 0.4:
+      tokenBullet.checked = true;
+      break;
+    // token success
+    case 0.7:
+      tokenBullet.disabled = true;
+      break;
+    // connect request
+    case 0.8:
+      connectBullet.checked = true;
+      break;
+    // connect success / start
+    case 1:
+      connectBullet.disabled = true;
+      break;
+  }
 };
 
 OLUi.prototype.toggleInfoCard = function(show) {
@@ -139,7 +182,15 @@ OLUi.prototype.toggleInfoCard = function(show) {
     infoCard.title.classList.add('fadeOutLeft');
     infoCard.textCard.classList.add('fadeOutRight');
     infoCard.starter.classList.add('fadeOutRight');
+    if (infoCard.reqLog.card.classList.contains('fadeInUp')) {
+      this.toggleInfoCardText();
+    }
   }
+};
+
+OLUi.prototype.toggleInfoCardText = function() {
+  this.controls.infoCard.textCard.querySelector('#info-text').classList.toggle('fadeOutUp');
+  this.controls.infoCard.reqLog.card.classList.toggle('fadeInUp');
 };
 
 OLUi.prototype.setCardData = function(type, selection, data) {
@@ -147,8 +198,8 @@ OLUi.prototype.setCardData = function(type, selection, data) {
   var linkHTML = '<a href="' + data.link.url + '" target="_blank">' + data.link.text + '</a>';
   var starterText = 'Try ' + data.name + ' now!';
   if (type === 'info') {
-    infoCard.textCard.children[0].innerText = data.text;
-    infoCard.textCard.children[1].innerHTML = linkHTML;
+    infoCard.textCard.querySelector('#info-text').innerText = data.text;
+    infoCard.textCard.querySelector('#info-link').innerHTML = linkHTML;
     infoCard.title.children[0].src = data.titleSVG;
     infoCard.starter.innerText = starterText;
     infoCard.starter.dataset.type = selection;

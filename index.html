@@ -95,8 +95,19 @@
           <img src="" />
         </div>
         <div class="card animated vertical-center card-info-textcard" id="card-info-textcard">
-          <span id="info-text"></span>
-          <span id="info-link"></span>
+          <div class="animated card-info-requestlog" id="info-request">
+            <ul>
+              <li>Requesting VM... <input type="checkbox" class="requestlog-bullet-cbox" name="requestlog-queue" id="requestlog-queue" /><label class="requestlog-bullet" for="requestlog-queue"></label></li>
+            </ul>
+            <ul>
+              <li>Waiting for token... <input type="checkbox" class="requestlog-bullet-cbox" name="requestlog-token" id="requestlog-token" /><label class="requestlog-bullet" for="requestlog-token"></label></li>
+            </ul>
+            <ul>
+              <li>Connecting... <input type="checkbox" class="requestlog-bullet-cbox" name="requestlog-connect" id="requestlog-connect" /><label class="requestlog-bullet" for="requestlog-connect"></label></li>
+            </ul>
+          </div>
+          <div id="info-text" class="animated"></div>
+          <div id="info-link"></div>
         </div>
         <div id="progress-button" class="progress-button">
           <button type="button" class="btn btn-start animated" id="button-start">Try xyz now!</button>
