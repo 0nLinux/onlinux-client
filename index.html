@@ -7,7 +7,7 @@
     <!-- Cantarell font !-->
     <link href='https://fonts.googleapis.com/css?family=Cantarell:400,700' rel='stylesheet' type='text/css'>
     <!---->
-    <!-- elastic progress -->
+    <!-- progress button -->
     <script src="./js/modernizr.custom.js"></script>
     <script src="./js/classie.js"></script>
     <script src="./js/progress.js"></script>
@@ -15,14 +15,17 @@
     <!-- OnLinux -->
     <link rel="stylesheet" href="./css/onlinux.css" />
     <link rel="stylesheet" href="./css/cards.css" />
+    <script src="./js/olclient.js" type="text/javascript" charset="utf-8" async defer></script>
     <script src="./js/olui.js" type="text/javascript" charset="utf-8" async defer></script>
+    <script src="./js/novnc/util.js" type="text/javascript" charset="utf-8" async defer></script>
+    <script src="./js/novnc.js" type="text/javascript" charset="utf-8" async defer></script>
     <!---->
   </head>
   <body>
     <!-- Menu -->
-    <div class="row">
+    <div class="row" id="menu-row">
       <div class="menu-container vertical-center">
-        <nav class="menu">
+        <nav class="menu animated">
           <input type="checkbox" class="menu-open" name="menu-open" id="menu-open" />
           <label class="menu-open-button" for="menu-open">
             <span class="hamburger hamburger-1"></span>
@@ -82,12 +85,17 @@
           </defs>
         </svg>
       </div>
-      <div class="canvas-container">
-        <canvas id="vnc-canvas" width="240" height="20" style="width: 240px; height: 20px; cursor: default;">Canvas not supported.</canvas>
+    </div>
+    <!-- canvas -->
+    <div class="row" id="canvas-row" style="display: none;">
+      <div class="col-ld-12">
+        <div class="canvas-container">
+          <canvas id="vnc-canvas" class="animated">Canvas not supported.</canvas>
+      </div>
       </div>
     </div>
     <!-- Cards/Dialogs -->
-    <div class="row">
+    <div class="row" id="cards-row">
       <div class="col-ld-12">
         <!-- machine info card -->
         <div class="card card-info vertical-center animated" id="card-info"></div>
@@ -110,7 +118,7 @@
           <div id="info-link"></div>
         </div>
         <div id="progress-button" class="progress-button">
-          <button type="button" class="btn btn-start animated" id="button-start">Try xyz now!</button>
+          <button type="button" class="btn btn-start animated" id="button-start" data-state="initial"><span>Try xyz now!</span></button>
             <!-- svg circle for progress indication -->
             <svg class="progress-circle" width="70" height="70">
               <path d="m35,2.5c17.955803,0 32.5,14.544199 32.5,32.5c0,17.955803 -14.544197,32.5 -32.5,32.5c-17.955803,0 -32.5,-14.544197 -32.5,-32.5c0,-17.955801 14.544197,-32.5 32.5,-32.5z"/>

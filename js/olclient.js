@@ -17,6 +17,8 @@ var OLClient = function() {
   this._distro = 'debian';
   this._xhr;
   this._reqPatience = 1000;
+  this._fnStatus;
+  console.log('[Client] loaded.')
 };
 
 OLClient.prototype._updateHttpString = function() {
@@ -24,6 +26,7 @@ OLClient.prototype._updateHttpString = function() {
 };
 
 OLClient.prototype._requestVM = function() {
+  this._fnStatus(null, 0);
   this._xhr = new XMLHttpRequest();
   this._xhr.onreadystatechange = this._xhrHandler;
   // ...:1215/ICanHaZVM?
@@ -50,22 +53,29 @@ OLClient.prototype._xhrHandler = function(evt) {
         switch (data.status) {
           case 'booting':
             window.setTimeout(olcl._askStatus, olcl._reqPatience);
+            olcl._fnStatus(null, 0.3);
             break;
           case 'waiting':
             console.info('Still waiting for VM. :/');
             window.setTimeout(olcl._askStatus, olcl._reqPatience);
+            olcl._fnStatus(null, 0.4);
             break;
           case 'token':
             console.log('Server passed a VNC token: ' + data.token);
-            olcl.getThePartyStarted();
+            olcl._vncToken = data.token;
+            olcl._fnStatus(null, 0.7);
+            olvnc.start(olcl._host, olcl._vncport, data.token);
             break;
           default:
+            if (data.err) {
+              return olcl._fnStatus(new Error(data.err));
+            }
             console.warn('I really don\'t know what to do with:');
             console.warn(data);
         }
       } catch (err) {
         console.error('Couldn\'t parse response: ' + srcXHR.responseText);
-        console.error(err);
+        olcl._fnStatus(err);
       }
     } else {
       console.log('Request failed with status: ' + srcXHR.status);
@@ -81,6 +91,6 @@ OLClient.prototype._guidGenerator = function() {
 };
 
 var startOLClient = function() {
-  console.log('Starting OnLinux Client...');
+  console.log('[Client] Starting...');
   olcl = new OLClient();
 }();

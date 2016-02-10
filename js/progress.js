@@ -90,6 +90,9 @@
   }
 
   UIProgressButton.prototype._submit = function() {
+    if (this.el.children[0].dataset.state === 'start') {
+      return this.options.callback(this, true);
+    }
     this.button.innerText = '';
     // by adding the loading class the button will transition to a "circle"
     classie.addClass( this.el, 'loading' );
@@ -150,6 +153,7 @@
         }
         // finally remove class loading.
         classie.removeClass( self.el, 'loading' );
+        olui.flashStart();
       };
 
     // give it a time (ideally the same like the transition time) so that the last progress increment animation is still visible.

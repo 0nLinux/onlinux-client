@@ -52,6 +52,11 @@ var OLUi = function() {
   }
   this.controls = {
     vncCanvas: document.getElementById('vnc-canvas'),
+    rows: {
+      menu: document.getElementById('menu-row'),
+      canvas: document.getElementById('canvas-row'),
+      cards: document.getElementById('cards-row')
+    },
     infoCard: {
       card: document.getElementById('card-info'),
       title: document.getElementById('card-info-title'),
@@ -78,6 +83,14 @@ var OLUi = function() {
       }
     }
   };
+  this.animEndEventNames = {
+    'WebkitTransition': 'webkitAnimationEnd',
+    'MozTransition': 'animationsend',
+    'OTransition': 'oanimationend',
+    'msTransition': 'MSAnimationEnd',
+    'transition': 'animationend'
+  },
+  this.animEndEventName = this.animEndEventNames[Modernizr.prefixed('transition')];
   this._hookControls();
   console.log('[UI] loaded.');
 };
@@ -97,32 +110,49 @@ OLUi.prototype._hookControls = function() {
     });
   }
   menuOpener.addEventListener('click', function(evt) {
-    for (var control in menuItems) {
-      menuItems[control].checked = false;
-    }
+    self.closeMenuItems();
     menu.style.height = '225px';
     self.toggleInfoCard(false);
   });
-  starter.addEventListener('click', function(evt) {
-    console.log('[UI] Requesting ' + evt.target.dataset.type + ' VM');
-    self.toggleInfoCardText();
-  });
   var progress = new UIProgressButton(document.getElementById('progress-button'), {
-    callback : function( instance ) {
-      var progress = 0
-      var interval = setInterval( function() {
-            progress = (Math.round((progress + 0.1) * 10) / 10);
-            self.setLogBullets(progress);
-            instance.setProgress(progress);
-            if(progress === 1) {
-              instance.stop(1);
-              clearInterval(interval);
+    callback: function(instance, start) {
+      if (start) {
+        self.showCanvas();
+      } else {
+        console.log('[UI] Requesting ' + starter.dataset.type + ' VM');
+        self.toggleInfoCardText();
+        olcl._fnStatus = function(err, progress) {
+          if (err) {
+            if (err.message === 'ENOVMAV') {
+              self.setLogBullets(-1);
+              return instance.stop(-1);
             }
-          }, 150);
-      self.setLogBullets(0);
+          }
+          self.setLogBullets(progress);
+          instance.setProgress(progress);
+          if (progress === 1) {
+            starter.dataset.state = 'start';
+            instance.stop(1);
+          }
+        };
+        self.setLogBullets(0);
+        olcl._requestVM();
+      }
     }
   });
 };
+
+OLUi.prototype.closeMenuItems = function() {
+  var menuItems = this.controls.menu.items;
+  for (var control in menuItems) {
+    menuItems[control].checked = false;
+  }
+};
+
+OLUi.prototype.flashStart = function() {
+  this.controls.infoCard.starter.innerHTML = '<span>Start</span>';
+  this.controls.infoCard.starter.classList.add('flash');
+}
 
 OLUi.prototype.setLogBullets = function(progress) {
   var queueBulllet = this.controls.infoCard.reqLog.bullets.queue;
@@ -156,13 +186,31 @@ OLUi.prototype.setLogBullets = function(progress) {
     case 1:
       connectBullet.disabled = true;
       break;
+    // queue failed
+    case -1:
+      queueBulllet.disabled = true;
+      queueBulllet.checked = false;
+      break;
+    // token failed
+    case -2:
+      tokenBulllet.disabled = true;
+      tokenBulllet.checked = false;
+      break;
+    // connect failed
+    case -3:
+      connectBulllet.disabled = true;
+      connectBulllet.checked = false;
+      break;
   }
 };
 
-OLUi.prototype.toggleInfoCard = function(show) {
+OLUi.prototype.toggleInfoCard = function(show, cb) {
   var infoCard = this.controls.infoCard;
   var hasFadeIn = infoCard.card.classList.contains('fadeInUp');
   if (show && !hasFadeIn) {
+    if (typeof cb === 'function') {
+      infoCard.card.addEventListener(this.animEndEventName, cb);
+    }
     infoCard.card.classList.remove('fadeOutLeft');
     infoCard.title.classList.remove('fadeOutLeft');
     infoCard.textCard.classList.remove('fadeOutRight');
@@ -172,7 +220,11 @@ OLUi.prototype.toggleInfoCard = function(show) {
     infoCard.title.classList.add('fadeInUp');
     infoCard.textCard.classList.add('fadeInDown');
     infoCard.starter.classList.add('fadeInUp');
+
   } else if (!show && hasFadeIn) {
+    if (typeof cb === 'function') {
+      infoCard.card.addEventListener(this.animEndEventName, cb);
+    }
     infoCard.card.classList.remove('fadeInUp');
     infoCard.title.classList.remove('fadeInUp');
     infoCard.textCard.classList.remove('fadeInDown');
@@ -196,13 +248,40 @@ OLUi.prototype.toggleInfoCardText = function() {
 OLUi.prototype.setCardData = function(type, selection, data) {
   var infoCard = this.controls.infoCard;
   var linkHTML = '<a href="' + data.link.url + '" target="_blank">' + data.link.text + '</a>';
-  var starterText = 'Try ' + data.name + ' now!';
+  var starterHTML = '<span>Try ' + data.name + ' now!</span>';
   if (type === 'info') {
     infoCard.textCard.querySelector('#info-text').innerText = data.text;
     infoCard.textCard.querySelector('#info-link').innerHTML = linkHTML;
     infoCard.title.children[0].src = data.titleSVG;
-    infoCard.starter.innerText = starterText;
+    infoCard.starter.innerHTML = starterHTML;
     infoCard.starter.dataset.type = selection;
+  }
+};
+
+OLUi.prototype.showCanvas = function() {
+  var self = this;
+  this.closeMenuItems();
+  this.toggleInfoCard(false);
+  this.toggleMenu(false, function() {
+    self.controls.rows.menu.style.display = 'none';
+    self.controls.rows.cards.style.display = 'none';
+    self.controls.rows.canvas.style.display = '';
+    self.controls.vncCanvas.classList.add('fadeInCanvas');
+  });
+};
+OLUi.prototype.hideCanvas = function() {
+  this.controls.menu.opener.checked = false;
+  this.controls.rows.canvas.style.display = 'none';
+  
+};
+
+OLUi.prototype.toggleMenu = function(show, cb) {
+  var menu = this.controls.menu.navElement;
+  if (!show) {
+    if (typeof cb === 'function') {
+      menu.addEventListener(this.animEndEventName, cb);
+    }
+    menu.classList.add('fadeOutUp');
   }
 };
 

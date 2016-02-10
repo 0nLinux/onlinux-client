@@ -17,6 +17,10 @@
   top: 32px;
   left: 20px;
 }
+.progress-button .cross {
+  top: 32px;
+  left: -44px;
+}
 .progress-button .progress-circle {
   left: 241px;
   top: 31px;
@@ -90,3 +94,26 @@
   -webkit-transition: background-color 0.3s, color 0.3s, width 0.3s cubic-bezier(0.6, -0.6, 0.75, 0.75), border-width 0.3s, border-color 0.3s;
   transition: background-color 0.3s, color 0.3s, width 0.3s cubic-bezier(0.6, -0.6, 0.75, 0.75), border-width 0.3s, border-color 0.3s;
 }
+
+@keyframes flashStart {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.progress-button button.flash span {
+  -webkit-animation-name: flashStart;
+  animation-name: flashStart;
+  animation-delay: 1500ms;
+  animation-iteration-count: infinite;
+  animation-duration: 2s;
+}
+
