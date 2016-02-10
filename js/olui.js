@@ -136,7 +136,7 @@ OLUi.prototype._hookControls = function() {
           }
         };
         self.setLogBullets(0);
-        olcl._requestVM();
+        olcl._requestVM(starter.dataset.type);
       }
     }
   });

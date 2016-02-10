@@ -14,7 +14,6 @@ var OLClient = function() {
   this._httpString = 'http://' + this._host + ':' + this._port + '/';
   this._guid = this._guidGenerator();
   this._connected = false;
-  this._distro = 'debian';
   this._xhr;
   this._reqPatience = 1000;
   this._fnStatus;
@@ -25,12 +24,12 @@ OLClient.prototype._updateHttpString = function() {
   this._httpString = 'http://' + this._host + ':' + this._port + '/';
 };
 
-OLClient.prototype._requestVM = function() {
+OLClient.prototype._requestVM = function(distro) {
   this._fnStatus(null, 0);
   this._xhr = new XMLHttpRequest();
   this._xhr.onreadystatechange = this._xhrHandler;
   // ...:1215/ICanHaZVM?
-  this._xhr.open('GET', this._httpString + 'ichzvm?' + this._distro + '&' + this._guid);
+  this._xhr.open('GET', this._httpString + 'ichzvm?' + distro + '&' + this._guid);
   this._xhr.send();
 };
 
