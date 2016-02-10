@@ -153,7 +153,11 @@
         }
         // finally remove class loading.
         classie.removeClass( self.el, 'loading' );
-        olui.flashStart();
+        if (status > -1) {
+          olui.flashStart();
+        } else {
+          olui.requestErr();
+        }
       };
 
     // give it a time (ideally the same like the transition time) so that the last progress increment animation is still visible.

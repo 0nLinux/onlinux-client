@@ -204,6 +204,10 @@ OLUi.prototype.setLogBullets = function(progress) {
   }
 };
 
+OLUi.prototype.requestErr = function() {
+  this.controls.infoCard.starter.innerHTML = '<span>Error!</span>';
+}
+
 OLUi.prototype.toggleInfoCard = function(show, cb) {
   var infoCard = this.controls.infoCard;
   var hasFadeIn = infoCard.card.classList.contains('fadeInUp');
